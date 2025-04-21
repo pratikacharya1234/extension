@@ -1,0 +1,31 @@
+{
+  "name": "web-vuln-scanner-extension",
+  "displayName": "Web Vuln Scanner",
+  "description": "Hack-style VS Code tool to scan web apps, apps & software for vulnerabilities using web-vuln-scanner.",
+  "version": "1.0.0",
+  "publisher": "pratikacharya",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "icon": "logo.png",
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onCommand:webVulnScanner.start"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "webVulnScanner.start",
+        "title": "🛡️ Start Web Vulnerability Scan"
+      }
+    ]
+  },
+  "dependencies": {
+    "web-vuln-scanner": "^1.0.6"
+  }
+}
