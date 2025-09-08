@@ -1,8 +1,15 @@
 const vscode = require('vscode');
-const axios = require('axios');
-const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
+
+// Import dependencies with error handling
+let axios, cheerio;
+try {
+  axios = require('axios');
+  cheerio = require('cheerio');
+} catch (error) {
+  console.error('Dependency loading error:', error);
+}
 
 // Vulnerability scanner implementation
 class VulnerabilityScanner {
@@ -17,6 +24,32 @@ class VulnerabilityScanner {
     this.isScanning = true;
     this.scanResults = [];
     this.scanProgress = 0;
+
+    // Check if dependencies are available
+    if (!axios) {
+      this.addVulnerability({
+        type: 'DEPENDENCY_ERROR',
+        severity: 'HIGH',
+        title: 'Missing Dependencies',
+        description: 'Required dependencies (axios) are not available. Please reinstall the extension.',
+        recommendation: 'Run: npm install in the extension directory and restart VS Code.'
+      });
+      this.isScanning = false;
+      return { vulnerabilities: this.scanResults, summary: this.generateSummary() };
+    }
+
+    // Validate URL
+    if (!this.isValidUrl(url)) {
+      this.addVulnerability({
+        type: 'INVALID_URL',
+        severity: 'HIGH',
+        title: 'Invalid URL Format',
+        description: 'The provided URL is not valid. Please use http:// or https:// format.',
+        recommendation: 'Enter a valid URL starting with http:// or https://'
+      });
+      this.isScanning = false;
+      return { vulnerabilities: this.scanResults, summary: this.generateSummary() };
+    }
 
     const config = vscode.workspace.getConfiguration('webVulnScanner');
     const timeout = options.timeout || config.get('defaultTimeout', 10000);
@@ -500,6 +533,15 @@ class VulnerabilityScanner {
       }
     } catch (error) {
       console.error('Authentication bypass check failed:', error);
+    }
+  }
+
+  isValidUrl(string) {
+    try {
+      new URL(string);
+      return string.startsWith('http://') || string.startsWith('https://');
+    } catch (_) {
+      return false;
     }
   }
 
