@@ -1,0 +1,7 @@
+{
+  "webVulnScanner.defaultTimeout": 10000,
+  "webVulnScanner.maxConcurrency": 5,
+  "webVulnScanner.enableAdvancedScans": true,
+  "webVulnScanner.autoSaveResults": false,
+  "typescript.preferences.includePackageJsonAutoImports": "auto"
+}

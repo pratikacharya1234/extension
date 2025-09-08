@@ -1,9 +1,17 @@
 {
   "name": "web-vuln-scanner-extension",
-  "displayName": "Web Vuln Scanner",
-  "description": "Hack-style VS Code tool to scan web apps, apps & software for vulnerabilities using web-vuln-scanner.",
+  "displayName": "Web Vulnerability Scanner Pro",
+  "description": "Professional-grade VS Code extension for comprehensive web application security scanning with real-time vulnerability detection.",
   "version": "1.0.0",
   "publisher": "pratikacharya",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pratikacharya1234/Web-Vulnerability-Scanner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pratikacharya1234/Web-Vulnerability-Scanner/issues"
+  },
+  "homepage": "https://github.com/pratikacharya1234/Web-Vulnerability-Scanner#readme",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -11,21 +19,67 @@
   "categories": [
     "Other",
     "Programming Languages",
-    "Linters"
+    "Linters",
+    "Testing"
   ],
-  "activationEvents": [
-    "onCommand:webVulnScanner.start"
+  "keywords": [
+    "vulnerability",
+    "security",
+    "web",
+    "scanner",
+    "penetration testing",
+    "cybersecurity",
+    "audit"
   ],
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "webVulnScanner.start",
-        "title": "🛡️ Start Web Vulnerability Scan"
+        "title": "🛡️ Web Vulnerability Scanner"
+      },
+      {
+        "command": "webVulnScanner.quickScan",
+        "title": "⚡ Quick Security Scan"
+      },
+      {
+        "command": "webVulnScanner.deepScan",
+        "title": "🔍 Deep Security Analysis"
+      },
+      {
+        "command": "webVulnScanner.exportResults",
+        "title": "📄 Export Scan Results"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Web Vulnerability Scanner",
+      "properties": {
+        "webVulnScanner.defaultTimeout": {
+          "type": "number",
+          "default": 10000,
+          "description": "Default timeout for scans in milliseconds"
+        },
+        "webVulnScanner.maxConcurrency": {
+          "type": "number",
+          "default": 5,
+          "description": "Maximum concurrent requests during scanning"
+        },
+        "webVulnScanner.enableAdvancedScans": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable advanced vulnerability detection modules"
+        },
+        "webVulnScanner.autoSaveResults": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically save scan results to workspace"
+        }
+      }
+    }
   },
   "dependencies": {
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
     "web-vuln-scanner": "^1.0.6"
   }
 }
